@@ -1,0 +1,176 @@
+<div class="container">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+
+            <div class="panel-body text-center">
+                <div id="grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" type="text/css" href="http://www.prepbootstrap.com/Content/shieldui-lite/dist/css/light/all.min.css" />
+    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/shieldui-lite/dist/js/shieldui-lite-all.min.js"></script>
+
+    <script type="text/javascript" >
+
+        var readUrl = "<%= readPath%>";
+        var createUrl =  "<%= createPath%>";
+        var updateUrl = "<%= updatePath%>";
+        var deleteUrl = "<%= deletePath%>";
+        var recoverUrl = "<%= recoverPath%>"
+
+
+    </script>
+
+    <script type="text/javascript">
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        $(document).ready(function () {
+            $("#grid").shieldGrid({
+                dataSource: {
+                    remote: {
+                        read: readUrl,
+                        modify: {
+                            create: {
+                                url: createUrl,
+                                type: "post",
+                                data: function (edited) {
+                                    edited[0].data.Id =uuidv4()
+                                    console.log(edited[0].data)
+                                    return {
+                                        task: edited[0].data.task,
+                                        done: edited[0].data.done,
+                                        Id: edited[0].data.Id
+                                    };
+
+                                }
+                            },
+                            update: {
+                                url: updateUrl,
+                                type: "post",
+                                data: function (edited) {
+                                    console.log(edited[0].data)
+                                    return {
+                                        task: edited[0].data.task,
+                                        done: edited[0].data.done,
+                                        Id: edited[0].data.Id,
+                                    };
+                                }
+                            },
+                            remove: {
+
+                                url: deleteUrl,
+                                type: "post",
+                                data: function (removed) {
+                                    console.log(removed[0].data)
+                                    return { Id: removed[0].data.Id };
+                                }
+                            },
+                            recover:
+                                {
+                                    url: recoverUrl,
+                                    type: "post",
+                                    data: function (removed) {
+                                        console.log(removed[0].data)
+                                        return { Id: removed[0].data.Id };
+                                    }
+                                }
+                        }
+                    },
+                    schema: {
+                        fields: {
+                            Id: { path: "Id", type: Number },
+                            task: { path: "task", type: String },
+                            done: { path: "done", type: Boolean },
+                        }
+                    }
+                },
+                sorting: {
+                    multiple: true
+                },
+                rowHover: false,
+                columns: [
+
+                    { field: "task", title: "Task", width: "500px" },
+                    { field: "done", title: "Done", width: "100px" },
+                    <% if(recycle == false) {%>
+                    {
+                        title: " ",
+                        width: "100px",
+                        buttons: [
+                            { cls: "editButton", commandName: "edit", caption: "<img src='/images/edit.png' /><span> Edit</span>" }
+                        ]
+                    },
+                    <%}%>
+                    {
+                        title: " ",
+                        width: "100px",
+                        buttons: [
+                            { cls: "deleteButton", commandName: "delete", caption: "<img src='/images/delete.png' /><span>Delete</span>" }
+                        ]
+                    }
+
+                ],
+                editing: {
+                    enabled: true,
+                    mode: "popup",
+                    type: "row",
+                    confirmation: {
+                        "delete": {
+                            enabled: true,
+                            template: function (item) {
+                                return "Delete : " + item.task
+                            }
+                        }
+                    }
+                },
+                <% if(recycle == false) {%>
+                toolbar: [
+                    {
+                        buttons: [
+                            { commandName: "insert", caption: "Add Task" }
+                        ],
+                        position: "top"
+                    }
+                ]
+                <%}%>
+            });
+
+
+
+        });
+    </script>
+
+    <style type="text/css">
+        .sui-button-cell
+        {
+            text-align: center;
+        }
+
+        .sui-checkbox
+        {
+            font-size: 17px !important;
+            padding-bottom: 4px !important;
+        }
+
+        .deleteButton img
+        {
+            margin-right: 3px;
+            vertical-align: bottom;
+        }
+
+        .bigicon
+        {
+            color: #5CB85C;
+            font-size: 20px;
+        }
+    </style>
+
+    <!-- Editable Table - END -->
+
+</div>
+
