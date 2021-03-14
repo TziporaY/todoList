@@ -8,8 +8,8 @@
         </div>
     </div>
 
-    <link rel="stylesheet" type="text/css" href="http://www.prepbootstrap.com/Content/shieldui-lite/dist/css/light/all.min.css" />
-    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/shieldui-lite/dist/js/shieldui-lite-all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/all.min.css" />
+    <script type="text/javascript" src="/js/shieldui-lite-all.min.js"></script>
 
     <script type="text/javascript" >
 
@@ -70,15 +70,7 @@
                                     return { Id: removed[0].data.Id };
                                 }
                             },
-                            recover:
-                                {
-                                    url: recoverUrl,
-                                    type: "post",
-                                    data: function (removed) {
-                                        console.log(removed[0].data)
-                                        return { Id: removed[0].data.Id };
-                                    }
-                                }
+
                         }
                     },
                     schema: {
