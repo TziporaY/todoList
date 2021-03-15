@@ -10,6 +10,7 @@ var tasksRouter = require('./routes/tasks')
 var deletedTasksRouter = require('./routes/deletedTasks')
 
 var app = express();
+/*Setting up to search the files on the views */
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

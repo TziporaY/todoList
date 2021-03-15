@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+
 const fs = require('fs')
 require('path').dirname(require.main.filename)
+
+/* Jason's list not deleted, becomes a list and sends to a user */ 
 
 router.get('/', function(req, res, next) {
     fs.readFile("db/tasks.json", 'utf8', (err, jsonString)=>{
@@ -13,23 +16,9 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/recover', function(req, res, next) {
-    let id =  req.body.Id;
-    fs.readFile("db/tasks.json", 'utf8', (err, jsonString)=>{
-        let tasks =JSON.parse(jsonString)
-        let task = tasks.find(obj=> obj.Id== id)
-        if(task){
-            task.deleted = false;
-            jsonString = JSON.stringify(tasks);
-            fs.writeFileSync("db/tasks.json",jsonString,"utf-8");
-            let newTasks = JSON.parse(jsonString).filter(obj => obj.deleted != true)
-            res.send(JSON.stringify(newTasks));
-        }
-        else
-            res.send(500);
-    })
 
-});
+
+/*Complete deletion from the server*/
 
 router.post('/delete', function(req, res, next) {
     let id =  req.body.Id;
