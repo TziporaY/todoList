@@ -24,6 +24,8 @@ I assumed that DB.JSON exists and therefore must have either data or [].<br>
 
 The app was uploaded to HEROKU , A link to the app is attached above .<br> 
 
+I tried to write a recovery code from RECYLE-BIN without success, deleting the code that was already written was a mess so I left it<br> 
+
 
 
 
