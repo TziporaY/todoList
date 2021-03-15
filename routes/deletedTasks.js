@@ -15,7 +15,23 @@ router.get('/', function(req, res, next) {
 
 });
 
+router.post('/recover', function(req, res, next) {
+    let id =  req.body.Id;
+    fs.readFile("db/tasks.json", 'utf8', (err, jsonString)=>{
+        let tasks =JSON.parse(jsonString)
+        let task = tasks.find(obj=> obj.Id== id)
+        if(task){
+            task.deleted = false;
+            jsonString = JSON.stringify(tasks);
+            fs.writeFileSync("db/tasks.json",jsonString,"utf-8");
+            let newTasks = JSON.parse(jsonString).filter(obj => obj.deleted != true)
+            res.send(JSON.stringify(newTasks));
+        }
+        else
+            res.send(500);
+    })
 
+});
 
 
 /*Complete deletion from the server*/

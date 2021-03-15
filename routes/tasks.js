@@ -12,10 +12,10 @@ router.get('/', function(req, res, next) {
     res.send(JSON.stringify(newTasks));
   })
 
-});
+ });
 
 /*Writing for Jason according to the actions performed */
-
+ 
 
 router.post('/create', function(req, res, next) {
   let newTaks =  req.body;
