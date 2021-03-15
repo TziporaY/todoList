@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const fs = require('fs')
-require('path').dirname(require.main.filename
+require('path').dirname(require.main.filename)
   
 /* Jason's list not deleted, becomes a list and sends to a user */
 
@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
     res.send(JSON.stringify(newTasks));
   })
 
- });
+});
 
 /*Writing for Jason according to the actions performed */
  
